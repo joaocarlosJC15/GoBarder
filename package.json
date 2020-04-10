@@ -1,0 +1,27 @@
+{
+  "name": "gobarder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "dev:debug" : "nodemon --inspect src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaocarlosJC15/GoBarder.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaocarlosJC15/GoBarder/issues"
+  },
+  "homepage": "https://github.com/joaocarlosJC15/GoBarder#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3",
+    "sucrase": "^3.13.0"
+  }
+}
