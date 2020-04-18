@@ -26,5 +26,3 @@ module.exports = {
     "no-unused-vars": ["error", {"argsIgnorePattern": "next"}]
   },
 };
-
-//yarn eslint --fix src --ext .js
