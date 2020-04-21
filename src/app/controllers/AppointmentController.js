@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import { startOfHour, parseISO, isBefore, format } from 'date-fns';
+import { startOfHour, parseISO, isBefore, format, subHours } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 
 import Appointment from '../models/Appointment';
@@ -101,6 +101,35 @@ class AppointmentController {
       content: `Novo agendamento de ${user.name} para ${formattedDate}`,
       user: provider_id,
     });
+    return response.json(appointment);
+  }
+
+  async delete(request, response) {
+    const appointment = await Appointment.findByPk(request.params.id);
+
+    if (appointment.user_id !== request.userId) {
+      return response.status(401).json({
+        error: "You don't have permission to cancel this appointment.",
+      });
+    }
+
+    if (appointment.canceled_at) {
+      return response.status(401).json({
+        error: 'This appointment has already been canceled.',
+      });
+    }
+    const dateWithSub = subHours(appointment.date, 2);
+
+    if (isBefore(dateWithSub, new Date())) {
+      return response.status(401).json({
+        error: 'You can only cancel appointment 2 hours in advance.',
+      });
+    }
+
+    appointment.canceled_at = new Date();
+
+    await appointment.save();
+
     return response.json(appointment);
   }
 }
